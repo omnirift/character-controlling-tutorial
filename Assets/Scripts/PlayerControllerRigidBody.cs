@@ -11,7 +11,14 @@ public class PlayerControllerRigidBody : MonoBehaviour {
     public float rotationRate = 360;
 
     // units moved per second holding down move input
-    public float moveSpeed = 2;
+    public float moveRate = 10;
+
+    private Rigidbody rb;
+
+    private void Start() 
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
 	// Update is called once per frame
 	private void Update () 
@@ -31,8 +38,10 @@ public class PlayerControllerRigidBody : MonoBehaviour {
 
     private void Move(float input) 
     {
+        // Make sure to set drag high so the sliding effect is very minimal (5 drag is acceptable for now)
+
         // mention this trash function automatically converts to local space
-        transform.Translate(Vector3.forward * input * moveSpeed);
+        rb.AddForce(transform.forward * input * moveRate, ForceMode.Force);
     }
 
     private void Turn(float input)
